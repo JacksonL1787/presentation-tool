@@ -1,0 +1,29 @@
+doctype html
+head
+  meta(charset='utf-8')
+  link(rel='stylesheet' href='/css/main.css')
+  link(rel='stylesheet' href='/css/presentations.css')
+  script(type='text/javascript' src='/includes/jquery.js')
+  script(type='text/javascript' src='/includes/moment.js')
+  title My Presentations
+body
+  .modal
+    span.close-modal &#x2715;
+    .modal-top
+      h2.modal-title Delete Presentation
+    .modal-content
+      p.modal-message
+      button.modal-delete-btn Delete
+  .overlay
+  .nav
+    h1 My Presentations
+  .content
+    .no-presentations
+      p You have no presenations! Would you like to create one?
+      button.create-presentation-btn Create Presentation
+    .all-presentations
+      .create-presentation-box.box
+        .create-presentation-box-content
+          p +
+          h2 Create
+script(src='/js/presentations.js')
