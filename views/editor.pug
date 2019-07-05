@@ -1,0 +1,60 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name="viewport" content="width=device-width, initial-scale=1.0")
+  link(rel='stylesheet' href='/css/main.css')
+  link(rel='stylesheet' href='/css/editor.css')
+  script(type='text/javascript' src='/includes/jquery.js')
+  script(type='text/javascript' src='/includes/moment.js')
+  script(type='text/javascript' src='/includes/particles.js')
+  script(type='text/javascript' src='/includes/jquery.smoothState.js')
+  title Edit Presentation
+  script.
+    const presentationraw = "#{presentation}"
+    window._DATA = {
+      presentation: JSON.parse(presentationraw.replace(/&quot;/g,'"')),
+      slide: "#{slide}"
+    }
+body
+  #main
+    .top-container
+      .top-nav
+        .content-wrap
+          .left
+            .go-back-btn
+            span.presentation-title(contentEditable="true" placeholder="Title")
+            .options-nav
+              .option-wrap
+                button.option-nav-btn#change-design-btn File
+              .option-wrap
+                button.option-nav-btn#change-design-btn Edit
+              .option-wrap
+                button.option-nav-btn#change-design-btn Insert
+              .option-wrap
+                button.option-nav-btn#change-design-btn Design
+              .option-wrap
+                button.option-nav-btn#change-design-btn Help
+            p.last-modified
+          .right
+            .present-btn
+              img.icon(src="/img/present.svg")
+              p.btn-text Present
+      .bottom-nav
+          .content-wrap
+            .pill-btns-wrap
+              .pill-btn.add-textbox
+                p Insert Textbox
+              .pill-btn.add-image
+                p Insert Image
+              input(type="file" class="nav-presentation-image-upload" style="display: none;")
+    .main
+      .slide-selection-wrap
+        h1.slide-selection-title Slides
+        .all-slides-wrap
+          .create-slide-btn
+            p +
+          .connector
+      .slides-preview
+        #editor-preview
+          h1 
+script(src='/js/editor.js')

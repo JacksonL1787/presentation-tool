@@ -1,0 +1,18 @@
+doctype html
+head
+  meta(name="viewport" content="width=device-width, initial-scale=1.0")
+  meta(charset='utf-8')
+  link(rel='stylesheet' href='/css/main.css')
+  link(rel='stylesheet' href='/css/design-preview.css')
+  script(type='text/javascript' src='/includes/jquery.js')
+  script(type='text/javascript' src='/includes/moment.js')
+  script(type='text/javascript' src='/includes/particles.js')
+  title Preview Design
+body
+  #particle-js
+  script.
+    const id = "#{designID}"
+    console.log(id)
+    particlesJS.load('particle-js', '/presentation-assets/designs/'+id+'.json', function() {
+      console.log('callback - particles.js config loaded');
+    });

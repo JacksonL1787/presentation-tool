@@ -45,13 +45,27 @@ class moveableImage {
 
   appendElem() {
     console.log(this.img)
-    $('body').append('<div class="presentation-image-wrap" style="top:'+this.y+'px; left:'+this.x+'px; width: '+this.width+'px; height: '+this.height+'px"><div class="image-editor-wrap"><div class="image-moveable-tool image-border"></div><div class="image-moveable-tool image-move-dot image-move-dot-top"></div><div class="image-moveable-tool image-move-dot image-move-dot-bottom"></div><div class="image-moveable-tool image-move-dot image-move-dot-left"></div><div class="image-moveable-tool image-move-dot image-move-dot-right"></div><div class="image-moveable-tool image-move-dot image-move-dot-top-left"></div><div class="image-moveable-tool image-move-dot image-move-dot-bottom-left"></div><div class="image-moveable-tool image-move-dot image-move-dot-top-right"></div><div class="image-moveable-tool image-move-dot image-move-dot-bottom-right"></div></div><img src="'+this.img.src+'" class="'+this.img.classList[0]+'"></div>')
+    changeSelected(false);
+    $('body').append('<div class="presentation-image-wrap selected" style="top:'+this.y+'px; left:'+this.x+'px; width: '+this.width+'px; height: '+this.height+'px"><div class="image-editor-wrap"><div class="image-moveable-tool image-border"></div><div class="image-moveable-tool image-move-dot image-move-dot-top"></div><div class="image-moveable-tool image-move-dot image-move-dot-bottom"></div><div class="image-moveable-tool image-move-dot image-move-dot-left"></div><div class="image-moveable-tool image-move-dot image-move-dot-right"></div><div class="image-moveable-tool image-move-dot image-move-dot-top-left"></div><div class="image-moveable-tool image-move-dot image-move-dot-bottom-left"></div><div class="image-moveable-tool image-move-dot image-move-dot-top-right"></div><div class="image-moveable-tool image-move-dot image-move-dot-bottom-right"></div></div><img src="'+this.img.src+'" class="'+this.img.classList[0]+'"></div>')
   }
 }
 
+let selected = false;
 let mouseDown = false;
 let initialOffsetPos = {x: 0, y: 0}
 let initialPagePos = {x: 0, y: 0}
+
+$(document).on('click', ':not(.presentation-image-wrap, .presentation-image-wrap *)',function(e) {
+  changeSelected(false)
+})
+
+$(document).on('click', '.presentation-image-wrap, .presentation-image-wrap *', function(e) {
+  if($(this).hasClass('presentation-image-wrap')) {
+    changeSelected($(this))
+    e.stopPropagation()
+    console.log($(this))
+  }
+})
 
 $(document).on('mousedown', '.image-moveable-tool', function(e) {
   setMouseDown($(this), e)
@@ -59,6 +73,16 @@ $(document).on('mousedown', '.image-moveable-tool', function(e) {
 
 $(document).on('mouseup', function(e) {
   mouseDown = false
+})
+
+$(document).on('keydown', function(e) {
+  console.log('test')
+  if(selected) {
+    if(e.keyCode == 8) {
+      console.log("test")
+      selected.remove()
+    }
+  }
 })
 
 $(document).on('mousemove', function(e) {
@@ -71,20 +95,127 @@ $(document).on('mousemove', function(e) {
       elem.css('left', newX + "px")
     }
     if(mouseDown.hasClass('image-move-dot-bottom')) {
-      let newHeight = elem.height() + (e.pageY - initialPagePos.y)
-      initialPagePos.y = e.pageY;
-      elem.height(newHeight)
+      changeHeight(false, e, elem, "+")
     }
     if(mouseDown.hasClass('image-move-dot-top')) {
-      let newHeight = elem.height() - (e.pageY - initialPagePos.y)
-      let newX = parseInt(elem.css('top').split("p")[0]) - (newHeight - elem.height());
-      initialPagePos.y = e.pageY;
-      console.log(newX)
-      elem.css('top', newX + "px")
-      elem.height(newHeight)
+      changeHeight(true, e, elem, "-")
+    }
+    if(mouseDown.hasClass('image-move-dot-left')) {
+      changeWidth(true, e, elem, "-")
+    }
+    if(mouseDown.hasClass('image-move-dot-right')) {
+      changeWidth(false, e, elem, "+")
+    }
+    if(mouseDown.hasClass('image-move-dot-top-left')) {
+      let changeTop;
+      let changeLeft;
+      let heightMathOp;
+      if(e.pageY < initialPagePos.y) {
+        changeTop = true;
+        heightMathOp = "-"
+
+      } else {
+        changeTop = true;
+        heightMathOp = "-"
+      }
+      if(e.pageX < initialPagePos.x) {
+        changeLeft = true;
+        widthMathOp = "-"
+      } else {
+        changeLeft = true;
+        widthMathOp = "-"
+      }
+      changeHeight(changeTop, e, elem, heightMathOp)
+      changeWidth(changeLeft, e, elem, widthMathOp)
+    }
+    if(mouseDown.hasClass('image-move-dot-top-right')) {
+      let changeTop;
+      let changeLeft;
+      let heightMathOp;
+      if(e.pageY < initialPagePos.y) {
+        changeTop = true;
+        heightMathOp = "-"
+
+      } else {
+        changeTop = true;
+        heightMathOp = "-"
+      }
+      if(e.pageX < initialPagePos.x) {
+        changeLeft = false;
+        widthMathOp = "+"
+      } else {
+        changeLeft = false;
+        widthMathOp = "+"
+      }
+      changeHeight(changeTop, e, elem, heightMathOp)
+      changeWidth(changeLeft, e, elem, widthMathOp)
+    }
+    if(mouseDown.hasClass('image-move-dot-bottom-right')) {
+      let changeTop;
+      let changeLeft;
+      let heightMathOp;
+      if(e.pageY < initialPagePos.y) {
+        changeTop = false;
+        heightMathOp = "+"
+
+      } else {
+        changeTop = false;
+        heightMathOp = "+"
+      }
+      if(e.pageX < initialPagePos.x) {
+        changeLeft = false;
+        widthMathOp = "+"
+      } else {
+        changeLeft = false;
+        widthMathOp = "+"
+      }
+      changeHeight(changeTop, e, elem, heightMathOp)
+      changeWidth(changeLeft, e, elem, widthMathOp)
+    }
+    if(mouseDown.hasClass('image-move-dot-bottom-left')) {
+      let changeTop;
+      let changeLeft;
+      let heightMathOp;
+      if(e.pageY < initialPagePos.y) {
+        changeTop = false;
+        heightMathOp = "+"
+
+      } else {
+        changeTop = false;
+        heightMathOp = "+"
+      }
+      if(e.pageX < initialPagePos.x) {
+        changeLeft = true;
+        widthMathOp = "-"
+      } else {
+        changeLeft = true;
+        widthMathOp = "-"
+      }
+      changeHeight(changeTop, e, elem, heightMathOp)
+      changeWidth(changeLeft, e, elem, widthMathOp)
     }
   }
 })
+
+function changeHeight(changeTop, e, elem, mathOp) {
+  let newHeight = mathOp == "+" ? elem.height() + (e.pageY - initialPagePos.y) : elem.height() - (e.pageY - initialPagePos.y)
+  if(changeTop) {
+    let newY = parseInt(elem.css('top').split("p")[0]) - (newHeight - elem.height());
+    elem.css('top', newY + "px")
+  }
+  initialPagePos.y = e.pageY;
+  elem.height(newHeight)
+}
+
+function changeWidth(changeLeft, e, elem, mathOp) {
+  let newWidth = mathOp == "+" ? elem.width() + (e.pageX - initialPagePos.x) : elem.width() - (e.pageX - initialPagePos.x);
+  if(changeLeft) {
+    let newX = parseInt(elem.css('left').split("p")[0]) - (newWidth - elem.width());
+    elem.css('left', newX + "px")
+  }
+  initialPagePos.x = e.pageX;
+  elem.width(newWidth)
+}
 
 function setMouseDown(elem, e) {
   mouseDown = elem;
@@ -92,4 +223,16 @@ function setMouseDown(elem, e) {
   initialOffsetPos.y = e.offsetY;
   initialPagePos.x = e.pageX;
   initialPagePos.y = e.pageY;
+}
+
+function changeSelected(elem) {
+  $('.presentation-image-wrap').removeClass('selected');
+  selected = elem;
+  if(selected) {
+    selected.addClass('selected');
+  }
+}
+
+function deleteImage(img) {
+  
 }

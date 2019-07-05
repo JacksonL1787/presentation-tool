@@ -1,11 +1,17 @@
 doctype html
 head
+  meta(name="viewport" content="width=device-width, initial-scale=1.0")
   meta(charset='utf-8')
   link(rel='stylesheet' href='/css/main.css')
   link(rel='stylesheet' href='/css/presentations.css')
   script(type='text/javascript' src='/includes/jquery.js')
   script(type='text/javascript' src='/includes/moment.js')
   title My Presentations
+  script.
+    const presentationsraw = "#{presentations}"
+    window._DATA = {
+      presentations: JSON.parse(presentationsraw.replace(/&quot;/g,'"'))
+    }
 body
   .modal
     span.close-modal &#x2715;
@@ -18,6 +24,13 @@ body
   .nav
     h1 My Presentations
   .content
+    .sort-by-wrap
+      label Sort by
+      br
+      button.sort-by-dropdown Last Modified
+      .sort-by-menu
+        p.option Last Modified
+        p.option When Created
     .no-presentations
       p You have no presenations! Would you like to create one?
       button.create-presentation-btn Create Presentation

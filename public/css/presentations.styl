@@ -50,12 +50,14 @@
 			background #3fd0ff
 			border none
 			color white
+			display block
 			outline none
-			margin 10px 0 5px
-			text-align center
-			padding 10px 25px
+			margin 10px auto 5px
+			padding 9px 50px
+			border-radius 100000px
+			font-weight bold
 			cursor pointer
-			font-size 13.5px
+			font-size 14px
 			transition background .3s
 			&:hover
 				background #00c0ff
@@ -84,132 +86,198 @@
 		left 50%
 		transform translate(-50%, -50%)
 .content
-	margin-top 40px
+	margin-top 60px
 	width 90%
 	height fit-content
 	position relative
 	margin-left 5%
-.no-presentations
-	position absolute
-	left 50%
-	top 20px
-	transform translateX(-50%)
-	width fit-content
-	height fit-content
-	text-align center
-	p
-		font-size 17px
-		margin 0 0 10px
-		color #a9a9a9
-.create-presentation-btn
-	border none
-	background white
-	color grey
-	margin 7.5px 0
-	padding 12px 20px
-	border-radius 100000px
-	font-size 16px
-	width 300px
-	outline none
-	cursor pointer
-	border 1px solid #e8e8e8
-	box-shadow none
-	transition box-shadow .3s, color .3s
-	&:hover
-		color #3fd0ff
-		box-shadow 0 0 4px 2px rgba(0,0,0,0.06)
-.all-presentations
-	width 100%
-	display flex
-	justify-content left
-.box
-	margin 20px
-	width 220px
-	position relative
-	height 290px
-.outer-presentation-wrap
-	width fit-content
-	height fit-content
-	position relative
-	.presentation-info-wrap
+	.sort-by-wrap
 		position absolute
+		display none
+		width fit-content
+		top -45px
 		left 20px
-		bottom -2px
-		opacity 0
+		label
+			color grey
+			font-size 13.5px
+		.sort-by-dropdown
+			color black
+			opacity 0.5
+			font-weight bold
+			font-size 15px
+			background none
+			border none
+			outline none
+			cursor pointer
+			margin 0
+			padding-right 10px
+			min-width 122px
+			text-align left
+			position relative
+			padding 0
+			transition opacity .3s
+			&:hover
+				opacity 0.65
+			&::after
+				content ""
+				background-image url('../img/left-arrow.svg');
+				background-size cover
+				background-position center
+				background-repeat no-repeat
+				transform translateY(-50%) rotate(-90deg)
+				width 13px
+				height 13px
+				position absolute
+				top calc(50% + 1px)
+				right 0
+		.sort-by-menu
+			position absolute
+			z-index -1
+			opacity 0
+			background white
+			width 110px
+			right -105px
+			top 50px
+			height fit-content
+			padding 15px
+			border 1px solid #F1F3F4
+			box-shadow 0 0 4px 1px rgba(0,0,0,0.08)
+			transition top .3s, opacity .3s
+			&.open
+				opacity 1
+				top 40px
+			.option
+				margin 10px 0
+				color grey
+				cursor pointer
+				transition color .3s
+				&:hover,
+				&.active
+					color #333
+	.no-presentations
+		position absolute
+		left 50%
+		top 20px
+		display none
+		transform translateX(-50%)
 		width fit-content
 		height fit-content
-		transition opacity .3s
-		.last-modified
-			color #a2a2a2
-			font-size 13.5px
-			margin 0
-.presentation-box
-	border 2px solid #e8e8e8
-	cursor pointer
-	transition border .3s
-	&:hover
-		border 2px solid #3fd0ff
-		h3
-			color #3fd0ff
-		.delete-presentation-wrap
-			opacity 1
-			bottom 10px
-		& + .presentation-info-wrap
-			opacity 1
-	h3
-		color #565656
-		position absolute
-		top 50%
-		left 50%
-		transform translate(-50%, -50%)
-		margin 0
-		width 90%
 		text-align center
-		font-size 30px
-		transition color .3s
-	.delete-presentation-wrap
-		width 25px
-		height 25px
-		border-radius 25px
-		position absolute
-		left 50%
-		opacity 0
-		bottom 0
-		transform translateX(-50%)
-		background #cacaca
-		transition opacity .2s, bottom .3s, background .3s
-		&:hover
-			background tomato
-		.delete-presentation
-			color white
-			margin 0
+		p
+			font-size 17px
+			margin 0 0 10px
+			color #a9a9a9
+		.create-presentation-btn
+			border none
+			background white
+			color grey
+			margin 7.5px 0
+			padding 12px 20px
+			border-radius 100000px
+			font-size 16px
+			width 300px
+			outline none
+			cursor pointer
+			border 1px solid #e8e8e8
+			box-shadow none
+			transition box-shadow .3s, color .3s
+			&:hover
+				color #3fd0ff
+				box-shadow 0 0 4px 2px rgba(0,0,0,0.06)
+	.box
+		margin 20px
+		width 220px
+		position relative
+		height 290px
+	.all-presentations
+		width 100%
+		justify-content left
+		flex-flow wrap row
+		display none
+		margin-top 75px
+		.outer-presentation-wrap
+			width fit-content
+			height fit-content
+			position relative
+			.presentation-info-wrap
+				position absolute
+				left 20px
+				bottom -2px
+				opacity 0
+				width fit-content
+				height fit-content
+				transition opacity .3s
+				.last-modified
+					color #a2a2a2
+					font-size 13.5px
+					margin 0
+		.presentation-box
+			border 2px solid #e8e8e8
+			cursor pointer
+			transition border .3s
+			&:hover
+				border 2px solid #3fd0ff
+				h3
+					color #3fd0ff
+				.delete-presentation-wrap
+					opacity 1
+					bottom 10px
+				& + .presentation-info-wrap
+					opacity 1
+			h3
+				color #565656
+				position absolute
+				top 50%
+				left 50%
+				transform translate(-50%, -50%)
+				margin 0
+				width 90%
+				text-align center
+				font-size 30px
+				transition color .3s
+			.delete-presentation-wrap
+				width 25px
+				height 25px
+				border-radius 25px
+				position absolute
+				left 50%
+				opacity 0
+				bottom 0
+				transform translateX(-50%)
+				background #cacaca
+				transition opacity .2s, bottom .3s, background .3s
+				&:hover
+					background tomato
+				.delete-presentation
+					color white
+					margin 0
+					position absolute
+					left 50%
+					top calc(50% + 1px)
+					transform translate(-50%, -50%)
+		.create-presentation-box
+			background #3fd0ff
+			cursor pointer
+			border 2px solid #3fd0ff
+			transition background .3s, border .3s
+			&:hover
+				background #00c0ff
+				border 2px solid #00c0ff
+			p
+				color white
+				margin 0
+				font-size 80px
+				font-weight bold
+			h2
+				color white
+				font-size 17.5px
+				font-weight 200
+				margin -5px 0 0
+		.create-presentation-box-content
+			height fit-content
+			width fit-content
 			position absolute
+			top calc(50% - 10px)
 			left 50%
-			top calc(50% + 1px)
+			text-align center
 			transform translate(-50%, -50%)
-.create-presentation-box
-	background #3fd0ff
-	cursor pointer
-	border 2px solid #3fd0ff
-	transition background .3s, border .3s
-	&:hover
-		background #00c0ff
-		border 2px solid #00c0ff
-	p
-		color white
-		margin 0
-		font-size 80px
-		font-weight bold
-	h2
-		color white
-		font-size 17.5px
-		font-weight 200
-		margin -5px 0 0
-.create-presentation-box-content
-	height fit-content
-	width fit-content
-	position absolute
-	top calc(50% - 10px)
-	left 50%
-	text-align center
-	transform translate(-50%, -50%)

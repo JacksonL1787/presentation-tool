@@ -1,0 +1,29 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name="viewport" content="width=device-width, initial-scale=1.0")
+  link(rel='stylesheet' href='/css/main.css')
+  link(rel='stylesheet' href='/css/presenter-preview.css')
+  script(type='text/javascript' src='/includes/jquery.js')
+  script(type='text/javascript' src='/includes/moment.js')
+  script(type='text/javascript' src='/includes/particles.js')
+  title Presentation Preview
+  script.
+    const presentationraw = "#{presentation}"
+    window._DATA = {
+      presentation: JSON.parse(presentationraw.replace(/&quot;/g,'"')),
+      slide: "#{slide}"
+    }
+body
+  .main-content
+    #main-slides
+    .hoverarea
+    .toolbar
+      .toolbar-option#close-presenter
+        include toolbar/close-icon
+      .toolbar-divider
+      .toolbar-option#previous-slide
+        include toolbar/left-arrow-icon
+      .toolbar-option#next-slide
+        include toolbar/right-arrow-icon
+script(src='/js/presenter-preview.js')
